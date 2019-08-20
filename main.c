@@ -1,111 +1,296 @@
 
 #include <stdio.h>
-#include <string.h>
+#include <time.h>
+#include <stdlib.h>
+#define TAMANHO 10000
 
-//void modificarVetor(char* vetor)
-//{
-//    for(int i = 0; i < 10; i++)
-//    {
-//        if(&vetor[i] == 'a')
-//            &vetor[i] = 'z';
-//    }
-//}
+void main(int argc, char** argv)
+{
+    srand(time(NULL));
+    clock_t tempoInicial, tempoFinal;
+    long tempo1 = 0, tempo2 = 0, tempo3 = 0, aux = 0, qComp = 0, qTrocas = 0;
+    int eleito, menor, posicaoDoMenor;
+    
+    int escolha = 0;
+    
+    printf("Cual metodo de ordenaçao quer usar?: Bolha(1) Selection(2) ");
+    scanf("%d", &escolha);
+    
+    if(escolha == 1) // Metodo Bolha
+    {
+        // Vetor com valores ordenados crescentemente
+        int vetor1[TAMANHO]; 
 
-//void modificarNum(int* num)
-//{
-//    *num = 15;
-//}
+        tempoInicial = clock();
 
-//void main()
-//{
-//    Exercicio 1
+        for (int i = 0; i <= TAMANHO; i++)
+            vetor1[i] = i+1;
+
+        for (int i = 1; i < TAMANHO; i++)
+        {
+            for (int j = 0; j < TAMANHO - 1; j++)
+            {
+                qComp++;
+                if (vetor1[j] > vetor1[j + 1])
+                {
+                    aux = vetor1[j];
+                    vetor1[j] = vetor1[j + 1];
+                    vetor1[j + 1] = aux;
+                    qTrocas++;         
+                }
+            }
+        }
+
+        tempoFinal = clock();
+        tempo1 = tempoFinal;
+
+        printf("Vetor com valores ordenados crescentemente \n"); 
+        mostrarDados(qComp, qTrocas, tempoFinal);
+
+        tempoFinal = 0;
+        qComp = 0;
+        qTrocas = 0;
+
+        // Vetor com valores ordenados decrescentemente
+        int vetor2[TAMANHO]; 
+
+        tempoInicial = clock();
+
+        int count = 0;
+        for (int i = TAMANHO; i >= 1; i--)
+        {
+            vetor2[count] = i;
+            count++;
+        }       
+
+        for (int i = 1; i < TAMANHO; i++)
+        {
+            for (int j = 0; j < TAMANHO - 1; j++)
+            {
+                qComp++;
+                if (vetor2[j] > vetor2[j + 1])
+                {
+                    aux = vetor2[j];
+                    vetor2[j] = vetor2[j + 1];
+                    vetor2[j + 1] = aux;
+                    qTrocas++;         
+                }
+            }
+        }
+
+        printf("\n");
+
+        tempoFinal = clock();
+        tempo2 = tempoFinal;
+
+        printf("Vetor com valores ordenados decrescentemente \n");
+        mostrarDados(qComp, qTrocas, tempoFinal);
+
+        tempoFinal = 0;
+        qComp = 0;
+        qTrocas = 0;
+
+        // Vetor com valores ordenados aleatoriamente
+        int vetor3[TAMANHO]; 
+
+        tempoInicial = clock();
+
+        for (int i = 0; i < TAMANHO; i++)
+            vetor3[i] = rand() % 10; 
+
+        for (int i = 1; i < TAMANHO; i++)
+        {
+            for (int j = 0; j < TAMANHO - 1; j++)
+            {
+                qComp++;
+                if (vetor3[j] > vetor3[j + 1])
+                {
+                    aux = vetor3[j];
+                    vetor3[j] = vetor3[j + 1];
+                    vetor3[j + 1] = aux;
+                    qTrocas++;         
+                }
+            }
+        }
+
+        printf("\n");
+
+        tempoFinal = clock();
+        tempo3 = tempoFinal;
+
+        printf("Vetor com valores aleatoriamente \n");
+        mostrarDados(qComp, qTrocas, tempoFinal);
+
+        tempoFinal = 0;
+        qComp = 0;
+        qTrocas = 0;
+    }
+    else if(escolha == 2) // Metodo Selection
+    {
+        // Vetor com valores ordenados crescentemente
+        int vetor1[TAMANHO]; 
+
+        tempoInicial = clock();
+
+        for (int i = 0; i <= TAMANHO; i++)
+            vetor1[i] = i+1;
+
+        for (int i = 0; i < TAMANHO-2; i++)
+        {
+            eleito = vetor1[i];
+            menor = vetor1[i+1];
+            posicaoDoMenor = i+1;
+            for (int j = i+1; j < TAMANHO; j++)
+            {        
+                qComp++;
+                if (vetor1[j] < menor)
+                {
+                    qTrocas++;
+                    menor = vetor1[j]; 
+                    posicaoDoMenor = j;
+                }
+            }
+            if( menor < eleito )
+            {          
+                vetor1[i] = vetor1[posicaoDoMenor];
+                vetor1[posicaoDoMenor] = eleito;
+            }
+        }
+
+        tempoFinal = clock();
+        tempo1 = tempoFinal;
+
+        printf("Vetor com valores ordenados crescentemente \n"); 
+        mostrarDados(qComp, qTrocas, tempoFinal);
+
+        tempoFinal = 0;
+        qComp = 0;
+        qTrocas = 0;
+
+        // Vetor com valores ordenados decrescentemente
+        int vetor2[TAMANHO]; 
+
+        tempoInicial = clock();
+
+        int count = 0;
+        for (int i = TAMANHO; i >= 1; i--)
+        {
+            vetor2[count] = i;
+            count++;
+        }       
+
+        for (int i = 0; i < TAMANHO-2; i++)
+        {
+            eleito = vetor2[i];
+            menor = vetor2[i+1];
+            posicaoDoMenor = i+1;
+            for (int j = i+1; j < TAMANHO; j++)
+            {            
+                qComp++;
+                if (vetor2[j] < menor)
+                {
+                    qTrocas++;
+                    menor = vetor2[j]; 
+                    posicaoDoMenor = j;
+                }
+            }
+            if( menor < eleito )
+            {
+                
+                vetor2[i] = vetor2[posicaoDoMenor];
+                vetor2[posicaoDoMenor] = eleito;
+            }
+        }
+
+        printf("\n");
+
+        tempoFinal = clock();
+        tempo2 = tempoFinal;
+
+        printf("Vetor com valores ordenados decrescentemente \n");
+        mostrarDados(qComp, qTrocas, tempoFinal);
+
+        tempoFinal = 0;
+        qComp = 0;
+        qTrocas = 0;
+
+        // Vetor com valores ordenados aleatoriamente
+        int vetor3[TAMANHO]; 
+
+        tempoInicial = clock();
+
+        for (int i = 0; i < TAMANHO; i++)
+            vetor3[i] = rand() % 10; 
+
+        for (int i = 0; i < TAMANHO-2; i++)
+        {
+            eleito = vetor3[i];
+            menor = vetor3[i+1];
+            posicaoDoMenor = i+1;
+            for (int j = i+1; j < TAMANHO; j++)
+            {         
+                qComp++;
+                if (vetor3[j] < menor)
+                {
+                    qTrocas++;
+                    menor = vetor3[j]; 
+                    posicaoDoMenor = j;
+                }
+            }
+            if( menor < eleito )
+            {       
+                vetor3[i] = vetor3[posicaoDoMenor];
+                vetor3[posicaoDoMenor] = eleito;
+            }
+        }
+
+        printf("\n");
+
+        tempoFinal = clock();
+        tempo3 = tempoFinal;
+
+        printf("Vetor com valores aleatoriamente \n");
+        mostrarDados(qComp, qTrocas, tempoFinal);
+
+        tempoFinal = 0;
+        qComp = 0;
+        qTrocas = 0;
+    }
     
-//    int total = 0;
-//    
-//    for(int i = 1; i <= 20; i++)
-//    {
-//        if( i % 2 == 0 )
-//            total += i;  
-//    }
-//    printf("%d \n", total);
     
-//    Exercicio 2
     
-//    char string[10];
-//    int tamanho = 0;
-//    
-//    printf("Escreva um texto de no maximo 10 carateres: ");
-//    scanf("%s", string);
-//    
-//    tamanho = strlen(string);
-//    
-//    printf("A string contem: %d letras \n", tamanho);
     
-//    Exercicio 3
+     /*
+    for (int i = 0; i < TAMANHO; i++)
+        printf("vetor 3 %d\t", vetor3[i]);
     
-//    int num = 10;
-//    
-//    printf("Valor antes da funçao: %d \n", num);
-//    
-//    modificarNum(&num);
-//    
-//    printf("Valor depois da funçao: %d \n", num);
+    printf("\n");
+    //Ordena vetor pelo metodo da bolha
+    for (int i = 1; i < TAMANHO; i++) {
+        for (int j = 0; j < TAMANHO - 1; j++) {
+            if (vetor[j] > vetor[j + 1]) {
+                aux = vetor[j];
+                vetor[j] = vetor[j + 1];
+                vetor[j + 1] = aux;
+            }
+        }
+    }
+    //Mostra valores do vetor ordenado   
+    for (int i = 0; i < TAMANHO; i++) {
+        printf("%d\t", vetor[i]);
+    }
+    printf("\n");
+    tempoFinal = clock(); //finaliza contagem do tempo
+    //calcula e mostra o tempo total de execucao
+    printf("Tempo: %f s\n", (double) (tempoFinal - tempoInicial) / CLOCKS_PER_SEC);*/
     
-//   Exercicio 4
-    
-//    char vetor[10];
-//    
-//    printf("Digite o texto de no maximo 10 carateres: ");
-//    scanf("%s", vetor);
-//    
-//    printf("Imprimindo o vetor antes da modificaçao: \n");
-//    for(int i = 0; i < 10; i++)
-//    {
-//        printf(" %c ", vetor[i]);
-//    }
-//    printf("\n");
-//    
-//    modificarVetor(&vetor[0]);
-//    
-//    printf("Imprimindo o vetor depois da modificaçao: \n");
-//    for(int i = 0; i < 10; i++)
-//    {
-//        printf(" %c ", vetor[i]);
-//    }
-//    printf("\n");
-    
-//   Exercicio 5
-    
-//    int num, cem, cinquenta, vinte, dez, cinco, dois;
-//    
-//    num=cem=cinquenta=vinte=dez=cinco=dois=0;
-//    
-//    printf("Digite um numero: ");
-//    scanf("%d", &num);
-//    
-//    cem = num / 100;
-//    num -= (cem * 100);
-//    
-//    cinquenta = num / 50;
-//    num -= (cinquenta * 50);
-//    
-//    vinte = num / 20;
-//    num -= (vinte * 20);
-//    
-//    dez = num / 10;
-//    num -= (dez * 10);
-//    
-//    cinco = num / 5;
-//    num -= (cinco * 5);
-//    
-//    dois = num / 2;
-//    num -= (dois * 2);
-//    
-//    printf("NOTAS: \n");
-//    printf("%d nota(s) de 100 \n", cem);
-//    printf("%d nota(s) de 50 \n", cinquenta);
-//    printf("%d nota(s) de 20 \n", vinte);
-//    printf("%d nota(s) de 10 \n", dez);
-//    printf("%d nota(s) de 5 \n", cinco);
-//    printf("%d nota(s) de 2 \n", dois);  
-//}
+}
+
+void mostrarDados(long comp, long trocas, long tempo)
+{
+    printf("Quantidade de comparaçoes: %ld \n", comp);
+    printf("Quantidade de trocas: %ld \n", trocas);
+    printf("Tempo gasto: %ld", tempo);
+    printf("\n");
+}
+
